@@ -39,7 +39,7 @@ function showJsonDOM(attrList, data){
 codeButton.addEventListener('click',function(){
   contentTitle.textContent = "CODE INFORMATION"
   contentList.innerHTML= null
-  loadJSON('testCode.json',function(data){
+  loadJSON('./static/testCode.json',function(data){
     let attrList = [
       "InfoType", "ID_code", "DID_RO","DID_client","Scope",
       "Hash_code","Time_issueed","URI_Redirection","Condition","ID_token"];
@@ -52,7 +52,7 @@ codeButton.addEventListener('click',function(){
 tokenButton.addEventListener('click',function(){
   contentTitle.textContent = "TOKEN INFORMATION"
   contentList.innerHTML= null
-  loadJSON('testToken.json',function(data){
+  loadJSON('./static/testToken.json',function(data){
     let attrList = [
       "InfoType","ID_token","DID_RO","DID_client","Scope",
       "Hash_code","Time_issueed","Time_expiration","URI_Redirection","Condition"];
