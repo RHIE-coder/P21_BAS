@@ -356,9 +356,9 @@ func (s *Server) HandleAuthorizeRequest(w http.ResponseWriter, r *http.Request) 
 	mCodeInfo := bcconnector.CodeInfo{
 		InfoType:        "CodeInfo",
 		ID_code:         mID.String(),
-		DID_RO:          "req.UserID",
-		DID_client:      "req.ClientID",
-		Scope:           "req.Scope",
+		DID_RO:          req.UserID,
+		DID_client:      req.ClientID,
+		Scope:           req.Scope,
 		Hash_code:       mHashV,
 		Time_issueed:    time.Now().String(),
 		URI_Redirection: req.RedirectURI,

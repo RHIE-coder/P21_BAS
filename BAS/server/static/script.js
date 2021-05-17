@@ -34,17 +34,19 @@ function showJsonDOM(attrList, data){
       contentList.appendChild(itemElement);
     }
   }
+
 }
 
 codeButton.addEventListener('click',function(){
   contentTitle.textContent = "CODE INFORMATION"
   contentList.innerHTML= null
-  loadJSON('./static/testCode.json',function(data){
+  
+  loadJSON('http://localhost:5000/code',function(data){
     let attrList = [
       "InfoType", "ID_code", "DID_RO","DID_client","Scope",
       "Hash_code","Time_issueed","URI_Redirection","Condition","ID_token"];
     
-    showJsonDOM(attrList, data)
+    showJsonDOM(attrList, JSON.parse(data))
   })
 })
 
@@ -52,29 +54,11 @@ codeButton.addEventListener('click',function(){
 tokenButton.addEventListener('click',function(){
   contentTitle.textContent = "TOKEN INFORMATION"
   contentList.innerHTML= null
-  loadJSON('./static/testToken.json',function(data){
+  loadJSON('http://localhost:5000/token',function(data){
     let attrList = [
       "InfoType","ID_token","DID_RO","DID_client","Scope",
       "Hash_code","Time_issueed","Time_expiration","URI_Redirection","Condition"];
     
-    showJsonDOM(attrList, data)
+    showJsonDOM(attrList, JSON.parse(data))
   })
 })
-
-
-////////////////////////////////////////////////////////////////////
-const show_json = document.getElementsByClassName("show-json")[0];
-const newDIV = document.createElement('div');
-
-fetch('http://localhost:5000/json')
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    console.log(data) //{str: "Hello", num: 100}
-    
-    newDIV.innerHTML = data.str + ", " + data.num;
-    newDIV.setAttribute("class","myDiv");
-    show_json.appendChild(newDIV);
-  });
-////////////////////////////////////////////////////////////////////

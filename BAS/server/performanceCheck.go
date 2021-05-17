@@ -13,39 +13,6 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/gateway"
 )
 
-// CodeInfo describes basic details of what makes up a code informaion
-type CodeInfo struct {
-	InfoType        string `json:"InfoType"`
-	ID_code         string `json:"ID_code"`
-	DID_RO          string `json:"DID_RO"`
-	DID_client      string `json:"DID_client"`
-	Scope           string `json:"Scope"`
-	Hash_code       string `json:"Hash_code"`
-	Time_issueed    string `json:"Time_issueed"`
-	URI_Redirection string `json:"URI_Redirection"`
-	Condition       string `json:"Condition"`
-	ID_token        string `json:"ID_token"`
-}
-
-// TokenInfo describes basic details of what makes up a token informaion
-type TokenInfo struct {
-	InfoType        string `json:"InfoType"`
-	ID_token        string `json:"ID_token"`
-	DID_RO          string `json:"DID_RO"`
-	DID_client      string `json:"DID_client"`
-	Scope           string `json:"Scope"`
-	Hash_token      string `json:"Hash_code"`
-	Time_issueed    string `json:"Time_issueed"`
-	Time_expiration string `json:"Time_expiration"`
-	URI_Redirection string `json:"URI_Redirection"`
-	Condition       string `json:"Condition"`
-}
-
-type Data struct {
-	Str string `json:"str"`
-	Num int    `json:"num"`
-}
-
 //웹페이지
 var welcome_page string = "static/index.html"
 var ctrct *gateway.Contract
@@ -60,23 +27,22 @@ func main() {
 
 	//라우터
 	http.HandleFunc("/", mainPage)
-	http.HandleFunc("/json", sendJson)
-	http.HandleFunc("/test1", testFunc1)
-	http.HandleFunc("/test2", testFunc2)
+	http.HandleFunc("/code", codeFunc)
+	http.HandleFunc("/token", tokenFunc)
 
 	//서버가동
 	log.Println("서버 시작")
 	http.ListenAndServe(":5000", nil)
 }
-
+////////////////////////////////////////////////////////////////
 func mainPage(res http.ResponseWriter, req *http.Request) {
 	webpage, _ := ioutil.ReadFile(welcome_page)
 	res.Header().Set("Content-Type", "text.html")
 	res.Write(webpage)
 }
 
-func sendJson(res http.ResponseWriter, req *http.Request) {
-	doc := Data{"Hello", 100}
+func codeFunc(res http.ResponseWriter, req *http.Request) {
+	doc := GetCodeInfoByDID(ctrct, "UserDID")
 
 	//JSON 인코딩
 	body, _ := json.Marshal(doc)
@@ -85,9 +51,8 @@ func sendJson(res http.ResponseWriter, req *http.Request) {
 	res.Write(body)
 }
 
-////////////////////////////////
-func testFunc1(res http.ResponseWriter, req *http.Request) {
-	doc := GetCodeInfoByDID(ctrct, "TestDIDRO")
+func tokenFunc(res http.ResponseWriter, req *http.Request) {
+	doc := GetTokenInfoByDID(ctrct, "UserDID")
 
 	//JSON 인코딩
 	body, _ := json.Marshal(doc)
@@ -96,17 +61,7 @@ func testFunc1(res http.ResponseWriter, req *http.Request) {
 	res.Write(body)
 }
 
-////////////////////////////////
-func testFunc2(res http.ResponseWriter, req *http.Request) {
-	doc := GetTokenInfoByDID(ctrct, "TestDIDRO")
-
-	//JSON 인코딩
-	body, _ := json.Marshal(doc)
-
-	res.Header().Set("Content-Type", "application/json")
-	res.Write(body)
-}
-
+////////////////////////////////////////////////////////////////
 func NewConnector() *gateway.Contract {
 	log.Println("============ application-golang starts ============")
 
