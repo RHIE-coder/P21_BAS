@@ -76,7 +76,7 @@ body{
 
 .content-container .content-list .content-items {
     background-color: #fffbdf;
-    width: 300px;
+    width: 80%;
     height: 220px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin: 20px;
@@ -85,22 +85,31 @@ body{
     flex-wrap: wrap;
 }
 
+.content-container .content-list .client-name{
+    background-color: #c6ffc1;
+    width: 100%;
+    font-size: 50px;
+    font-weight: bold;
+    padding-left:25px;
+    margin-top: 35px;
+}
+
 .content-container .content-list .content-items section{
     width: 100%;
     display:flex;
 }
 
 .content-container .content-list .content-items section div{
-    /*test*/background-color: #b6c9f0;
+    background-color: #b6c9f0;
     color: #233e8b;
     text-align: center;
     font-weight: bold;
-    width: 44%;   
+    width: 24%;   
 }
 
 .content-container .content-list .content-items section p{
     width: 56%;
-    text-align: center;
+    margin-left: 25px;
 }
 
 
